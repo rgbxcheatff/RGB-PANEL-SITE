@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RGB PANEL | لوحة الإدارة</title>
+<style>
+:root{color-scheme:dark;--bg:#090812;--panel:#151121;--panel2:#1d172b;--line:#302641;--accent:#c58aff;--text:#f5efff;--muted:#a99bb9;--red:#ff647c;--green:#6de0a4}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#211432 0,#090812 55%);color:var(--text);font-family:system-ui,Arial,sans-serif;min-height:100vh}
+main{width:min(1100px,94%);margin:35px auto}.brand{text-align:center;margin:25px 0 30px}.brand h1{margin:0;color:var(--accent);letter-spacing:2px}.brand p{color:var(--muted)}
+.panel{background:linear-gradient(145deg,#171222,#100d19);border:1px solid var(--line);border-radius:17px;padding:22px;margin:15px 0;box-shadow:0 12px 35px #0005}
+h2{font-size:19px;margin:0 0 17px}.field{display:flex;flex-direction:column;gap:7px;margin:12px 0}label{color:var(--muted);font-size:14px}
+input,select{width:100%;background:#0c0a13;color:white;border:1px solid var(--line);border-radius:10px;padding:13px;font:inherit;outline:none}input:focus{border-color:var(--accent)}
+button{border:0;border-radius:10px;padding:12px 18px;background:linear-gradient(110deg,#a76be8,#7541b8);color:white;font:inherit;font-weight:700;cursor:pointer}button.secondary{background:#30243f}button.danger{background:#762d43}button:disabled{opacity:.5;cursor:wait}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.stat{background:#100d19;border:1px solid var(--line);padding:17px;border-radius:12px}.stat strong{display:block;font-size:25px;color:var(--accent);margin-top:5px}
+.hidden{display:none!important}.muted{color:var(--muted)}.message{margin:12px 0;padding:12px;border-radius:9px;background:#211a2e;color:var(--accent);overflow-wrap:anywhere}.error{color:#ff9aaa}.success{color:var(--green)}
+.table-wrap{overflow:auto}table{border-collapse:collapse;width:100%;min-width:750px;font-size:14px}th,td{padding:12px 10px;border-bottom:1px solid var(--line);text-align:right}th{color:var(--accent);background:#171222;position:sticky;top:0}td{color:#e8dff2}.tag{padding:4px 9px;border-radius:20px;background:#30243f}.active{color:var(--green)}.expired,.revoked{color:#ff899d}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+#newKey{font-family:monospace;direction:ltr;text-align:center;font-size:18px;user-select:all}
+@media(max-width:650px){main{margin:15px auto}.panel{padding:15px}.grid{grid-template-columns:1fr}.brand h1{font-size:24px}}
+</style>
+</head>
+<body>
+<main>
+<header class="brand"><h1>RGB PANEL</h1><p>لوحة إدارة التراخيص</p></header>
+
+<section id="login" class="panel" style="max-width:430px;margin:30px auto">
+<h2>تسجيل دخول الإدارة</h2>
+<form id="loginForm">
+<div class="field"><label>اسم المستخدم</label><input id="username" autocomplete="username" required></div>
+<div class="field"><label>كلمة المرور</label><input id="password" type="password" autocomplete="current-password" required></div>
+<button id="loginBtn" type="submit" style="width:100%">تسجيل الدخول</button>
+<div id="loginMsg" class="message hidden"></div>
+</form>
+</section>
+
+<section id="dashboard" class="hidden">
+<div class="panel top"><div><strong>لوحة التحكم</strong><div class="muted">إدارة مفاتيح RGB PANEL</div></div><div class="actions"><button class="secondary" id="refresh">تحديث</button><button class="danger" id="logout">تسجيل الخروج</button></div></div>
+<div class="grid">
+<div class="stat">كل التراخيص<strong id="total">0</strong></div>
+<div class="stat">النشطة<strong id="activeCount">0</strong></div>
+<div class="stat">المنتهية أو الملغاة<strong id="inactiveCount">0</strong></div>
+</div>
+<section class="panel">
+<h2>إنشاء كود جديد</h2>
+<div class="grid">
+<div class="field"><label>مدة الترخيص بالأيام</label><input id="days" type="number" min="1" max="3650" value="30"></div>
+<div class="field" style="grid-column:span 2"><label>ملاحظة (اختياري)</label><input id="note" maxlength="200" placeholder="ملاحظة حول الكود"></div>
+</div>
+<div class="actions"><button id="create">إنشاء كود</button></div>
+<div id="created" class="hidden"><div class="message success">تم إنشاء الكود. احفظه الآن، لن يظهر كاملاً مرة أخرى.</div><input id="newKey" readonly><div class="actions"><button id="copyKey">نسخ الكود</button></div></div>
+<div id="createMsg" class="message hidden"></div>
+</section>
+<section class="panel">
+<div class="top"><h2>التراخيص</h2><button class="secondary" id="export">تصدير CSV</button></div>
+<div class="field"><label>البحث بالكود أو الملاحظة أو الحالة</label><input id="search" placeholder="ابحث هنا..."></div>
+<div class="table-wrap"><table><thead><tr><th>ID</th><th>آخر أحرف</th><th>المدة</th><th>الإنشاء</th><th>الانتهاء</th><th>الحالة</th><th>الجهاز</th><th>إجراء</th></tr></thead><tbody id="rows"><tr><td colspan="8">جارٍ التحميل...</td></tr></tbody></table></div>
+</section>
+</section>
+</main>
+<script>
+const API="https://rgb-panel-api.rgbxcheat.workers.dev";
+let token=null,licenses=[];
+const $=id=>document.getElementById(id);
+function msg(id,text,error=false){const e=$(id);e.textContent=text;e.classList.remove("hidden","error","success");if(error)e.classList.add("error");}
+async function request(path,options={}){
+ const headers={"Content-Type":"application/json",...(options.headers||{})};
+ if(token)headers.Authorization="Bearer "+token;
+ const r=await fetch(API+path,{...options,headers});
+ let data={};try{data=await r.json()}catch{}
+ if(!r.ok||data.ok===false)throw new Error(data.error||"حدث خطأ في الاتصال");
+ return data;
+}
+$("loginForm").addEventListener("submit",async e=>{
+ e.preventDefault();$("loginBtn").disabled=true;
+ try{
+  const d=await request("/api/admin/login",{method:"POST",body:JSON.stringify({username:$("username").value,password:$("password").value})});
+  token=d.token;$("password").value="";$("login").classList.add("hidden");$("dashboard").classList.remove("hidden");await load();
+ }catch(err){msg("loginMsg",err.message,true)}
+ finally{$("loginBtn").disabled=false}
+});
+function logout(){token=null;licenses=[];$("dashboard").classList.add("hidden");$("login").classList.remove("hidden");$("username").value="";$("password").value="";}
+$("logout").onclick=logout;
+async function load(){
+ try{const d=await request("/api/admin/licenses");licenses=d.licenses||[];render();}
+ catch(e){if(e.message.includes("جلسة")||e.message.includes("مصرح"))logout();else alert(e.message)}
+}
+function render(){
+ const active=licenses.filter(x=>x.status==="active").length;
+ $("total").textContent=licenses.length;$("activeCount").textContent=active;$("inactiveCount").textContent=licenses.length-active;
+ const q=$("search").value.trim().toLowerCase();
+ const rows=licenses.filter(x=>[x.id,x.key_hint,x.note,x.status].join(" ").toLowerCase().includes(q));
+ $("rows").innerHTML=rows.map(x=>`<tr>
+ <td>${x.id}</td><td dir="ltr">${esc(x.key_hint)}</td><td>${x.duration_days}</td>
+ <td>${date(x.created_at)}</td><td>${date(x.expires_at)}</td>
+ <td class="${esc(x.status)}">${status(x.status)}</td>
+ <td>${x.device_id?"مسجل":"غير مسجل"}</td>
+ <td>${x.status!=="revoked"?`<button class="danger" data-revoke="${x.id}">إلغاء</button>`:"—"}</td></tr>`).join("")||'<tr><td colspan="8">لا توجد نتائج</td></tr>';
+}
+function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function date(v){try{return new Date(v).toLocaleString("ar")}catch{return v||"—"}}
+function status(s){return ({active:"نشط",expired:"منتهي",revoked:"ملغى"})[s]||s}
+$("rows").addEventListener("click",async e=>{
+ const id=e.target.dataset.revoke;if(!id)return;
+ if(!confirm("هل تريد إلغاء هذا الترخيص؟"))return;
+ try{await request("/api/admin/revoke/"+id,{method:"POST",body:"{}"});await load();}
+ catch(err){alert(err.message)}
+});
+$("create").onclick=async()=>{
+ $("create").disabled=true;$("created").classList.add("hidden");
+ try{
+  const d=await request("/api/admin/create",{method:"POST",body:JSON.stringify({duration_days:Number($("days").value),note:$("note").value})});
+  $("newKey").value=d.key;$("created").classList.remove("hidden");$("note").value="";await load();
+ }catch(e){msg("createMsg",e.message,true)}
+ finally{$("create").disabled=false}
+};
+$("copyKey").onclick=async()=>{await navigator.clipboard.writeText($("newKey").value);$("copyKey").textContent="تم النسخ";};
+$("refresh").onclick=load;$("search").oninput=render;
+$("export").onclick=()=>{
+ const cols=["id","key_hint","duration_days","created_at","expires_at","status","device_id","last_check","note"];
+ const lines=[cols.join(","),...licenses.map(x=>cols.map(k=>'"'+String(x[k]??"").replace(/"/g,'""')+'"').join(","))];
+ const a=document.createElement("a");a.href=URL.createObjectURL(new Blob(["\uFEFF"+lines.join("\n")],{type:"text/csv;charset=utf-8"}));a.download="rgb-panel-licenses.csv";a.click();URL.revokeObjectURL(a.href);
+};
+</script>
+</body>
+</html>
