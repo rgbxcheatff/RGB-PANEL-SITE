@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RGB PANEL | الموقع الرسمي</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    color: white;
+    background: #090713;
+    line-height: 1.7;
+}
+
+header {
+    padding: 22px 8%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #302044;
+    background: rgba(13, 9, 25, .9);
+}
+
+.logo {
+    font-size: 27px;
+    font-weight: 900;
+    letter-spacing: 2px;
+}
+
+.logo span {
+    color: #b66cff;
+}
+
+nav a {
+    color: #d4c6e8;
+    text-decoration: none;
+    margin-right: 22px;
+}
+
+nav a:hover {
+    color: #c17aff;
+}
+
+.hero {
+    min-height: 510px;
+    padding: 100px 20px 75px;
+    text-align: center;
+    background:
+      radial-gradient(ellipse at 50% 0%, #57258c 0%, transparent 65%),
+      linear-gradient(180deg, #140d23, #090713);
+}
+
+.hero h1 {
+    font-size: clamp(38px, 7vw, 65px);
+    font-weight: 900;
+    margin-bottom: 15px;
+}
+
+.hero h1 span {
+    color: #c17aff;
+}
+
+.hero p {
+    color: #c6b8d8;
+    font-size: 18px;
+}
+
+.actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-top: 35px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    min-width: 165px;
+    padding: 14px 25px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: .25s;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    filter: brightness(1.15);
+}
+
+.buy {
+    background: linear-gradient(135deg, #a344f4, #7130c5);
+    color: white;
+    box-shadow: 0 5px 25px #9c43e655;
+}
+
+.download {
+    background: transparent;
+    color: #d8b4ff;
+    border: 1px solid #a95af0;
+}
+
+.prices {
+    max-width: 850px;
+    margin: 35px auto 0;
+    padding: 0 18px;
+}
+
+.prices h2 {
+    font-size: 25px;
+    margin-bottom: 15px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    overflow: hidden;
+    border-radius: 12px;
+    background: #171025;
+}
+
+th, td {
+    padding: 15px;
+    border-bottom: 1px solid #38264c;
+    text-align: center;
+}
+
+th {
+    background: #54268a;
+    color: white;
+}
+
+td {
+    color: #e5d8f4;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+.free {
+    color: #c17aff;
+    font-weight: bold;
+}
+
+.price {
+    color: #d09aff;
+    font-weight: bold;
+}
+
+section {
+    padding: 65px 20px;
+    text-align: center;
+}
+
+.telegram {
+    background: linear-gradient(180deg, #100b1b, #1a102b);
+    border-top: 1px solid #39244e;
+}
+
+.telegram p {
+    color: #bcaaca;
+    margin: 12px 0 25px;
+}
+
+footer {
+    text-align: center;
+    padding: 25px;
+    color: #8e7e9e;
+    border-top: 1px solid #302044;
+    font-size: 14px;
+}
+
+@media(max-width: 600px) {
+    header {
+        padding: 18px 5%;
+    }
+
+    nav {
+        display: none;
+    }
+
+    .hero {
+        padding-top: 75px;
+    }
+
+    th, td {
+        padding: 12px 6px;
+        font-size: 14px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- رأس الموقع -->
+<header>
+    <div class="logo">RGB <span>PANEL</span></div>
+
+    <nav>
+        <a href="#home">الرئيسية</a>
+        <a href="#prices">الأسعار</a>
+        <a href="#telegram">تلجرام</a>
+    </nav>
+</header>
+
+<!-- الواجهة الرئيسية -->
+<main id="home">
+    <div class="hero">
+
+        <h1>WELCOME TO <span>RGB PANEL</span></h1>
+
+        <p>مرحباً بك في الموقع الرسمي لـ RGB PANEL</p>
+
+        <!-- أزرار الشراء والتحميل -->
+        <div class="actions">
+
+            <a class="btn buy" id="buyButton" href="#">
+                اشترِ الآن
+            </a>
+
+            <a class="btn download" id="downloadButton" href="#">
+                تحميل التطبيق
+            </a>
+
+        </div>
+
+        <!-- جدول الأسعار أسفل الأزرار -->
+        <div class="prices" id="prices">
+
+            <h2>أسعار الاشتراكات</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>الاشتراك</th>
+                        <th>المدة</th>
+                        <th>السعر</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>تجربة مجانية</td>
+                        <td>يوم واحد</td>
+                        <td class="free">مجاناً</td>
+                    </tr>
+
+                    <tr>
+                        <td>أسبوع</td>
+                        <td>7 أيام</td>
+                        <td class="price">8 د.ت</td>
+                    </tr>
+
+                    <tr>
+                        <td>3 أسابيع</td>
+                        <td>21 يوماً</td>
+                        <td class="price">20 د.ت</td>
+                    </tr>
+
+                    <tr>
+                        <td>شهر</td>
+                        <td>30 يوماً</td>
+                        <td class="price">25 د.ت</td>
+                    </tr>
+
+                    <tr>
+                        <td>3 أشهر</td>
+                        <td>90 يوماً</td>
+                        <td class="price">60 د.ت</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</main>
+
+<!-- قسم تلجرام -->
+<section class="telegram" id="telegram">
+
+    <h2>انضم إلى مجتمع RGB PANEL</h2>
+
+    <p>تابع آخر الأخبار والتحديثات واحصل على المساعدة.</p>
+
+    <a class="btn buy" id="telegramButton" href="#">
+        قناة تلجرام
+    </a>
+
+</section>
+
+<footer>
+    RGB PANEL © 2026 — جميع الحقوق محفوظة
+</footer>
+
+<!-- إعداد الروابط الحقيقية -->
+<script>
+/*
+ضع رابط ملف التطبيق مكان الرابط التالي.
+ضع رابط تلجرام مكان الرابط الثاني.
+*/
+
+const رابط_التحميل = "RGB_PANEL.apk";
+const رابط_تلجرام = "ضع_رابط_تلجرام_هنا";
+
+document.getElementById("downloadButton").href = رابط_التحميل;
+document.getElementById("buyButton").href = "https://t.me/rgbxcheat";
+document.getElementById("telegramButton").href = "https://t.me/rgbxcheat";
+</script>
+
+</body>
+</html>

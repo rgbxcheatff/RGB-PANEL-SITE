@@ -1,0 +1,12 @@
+.env
+.env.*
+*.db
+*.sqlite
+*.sqlite3
+*.jks
+*.keystore
+*.pem
+*.key
+*token*
+*secret*
+*password*
